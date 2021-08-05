@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" dir"ltr">
+    <head>
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="main.css">
+      <title>Sidebar Tasarımı</title>
+      <!-- Boxicons -->
+      <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+      <script src="main.js"></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+      <div class="sidebar">
+        <div class="logo_content">
+          <div class="logo">
+            <i class='bx bx-user-circle' id="cv-left"></i>
+            <span class="logo_name">CV</span>
+            <div class="close-sidebar"><i class='bx bxs-caret-left-circle' id="lib"></i></div>
+          </div>
+        </div>
+        <hr class="ayrac">
+        <ul class="nav_list">
+          <!-- Python -->
+          <li>
+            <a onclick="sidebarScroll(0)">
+            <i class='bx bx-trip'></i>
+            <span class="links_name">Kariyer Hedefi</span>
+            </a>
+          </li>
+          <!-- C++ -->
+          <li>
+            <a onclick="sidebarScroll(1)">
+              <i class='bx bx-brain' ></i>
+              <span class="links_name">Beceriler</span>
+            </a>
+          </li>
+          <!-- HTML5 -->
+          <li>
+            <a onclick="sidebarScroll(2)">
+              <i class='bx bx-book-bookmark' ></i>
+              <span class="links_name">Eğitim</span>
+            </a>
+          </li>
+          <!-- CSS3 -->
+          <li>
+            <a onclick="sidebarScroll(3)">
+              <i class='bx bx-medal' ></i>
+              <span class="links_name">Sertifikalar</span>
+            </a>
+          </li>
+          <!-- JavaScript-->
+          <li>
+            <a onclick="sidebarScroll(4)">
+              <i class='bx bx-code-curly' ></i>
+              <span class="links_name">Projeler</span>
+            </a>
+          </li>
+          <li>
+            <a onclick="sidebarScroll(5)">
+              <i class='bx bxs-business' ></i>
+              <span class="links_name">İş Deneyimi</span>
+            </a>
+          </li>
+        </ul>
+        <div class="profile_content">
+          <div class="profile">
+            <div class="profile_details">
+              <!-- <img src="ne.jpg" alt=""> -->
+              <div class="infos">
+                <div class="photo-name">
+                  <span class="vesikalik" id="vesikalik"><img src="images/vesikalik.jpg"></span>
+                  <span class="name">Mustafa Göktürk<br>ULUERLER
+                  <div class="job">Mechanical Engineer</div></span>
+                </div>
+                <div class="social">
+                  <span class="social_logo" id="phone"><a><i class='bx bxs-phone'></i></a></span>
+                  <span class="social_logo"><a href="mailto::mguluerler@hotmail.com" target="_blank"><i class='bx bx-mail-send'></i></a></span>
+
+                <!-- Linkedin -->
+                  <span class="social_logo"><a href="https://www.linkedin.com/in/mguluerler/" target="_blank"><i class='bx bxl-linkedin'></i></a></span>
+                <!-- Github -->
+                  <span class="social_logo"><a href="https://github.com/mguluerler" target="_blank"><i class='bx bxl-github' ></i></a></span>
+                  <span class="social_logo"><a href="https://grabcad.com/mustafa.uluerler-2" target="_blank"><img src="images/logos/grabcad.png" height="16px"></a></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background"></div>
+      <div class="content_page">
+        <div class="content_KariyerHedefi_Arka" id="KariyerHedefi">
+          <div class="content_KariyerHedefi">
+            <h2 class="content_KariyerHedefi">
+              Kariyer Hedefi
+            </h2>
+            <p class="content_KariyerHedefi">
+              Bilindiği gibi başarının sırrı teknik ve yönetimsel olarak gelişmiş
+              ekiplerin kurulabilmesinden geçer. Bu ekiplerde motivasyonu ve iletişimi sağlamak çok önemlidir.
+              Kariyer hedefi olarak, uzun vadede önce böyle bir ekibin bir parçası olarak, çalıştığım şirketin kurumsal
+              hedeflerine ulaşabilmesinin bir parçası olmayı ve bu konularda kendi kişisel gelişimimi devam ettirmeyi,
+              sonrasında böyle bir ekibin lideri olarak çalıştığım şirketin kurumsal hedeflerini yükseltmeyi hedefliyorum.
+              Bu hedefe giden yolda gereken donanımları kendime katarak ilerlemek istiyorum.
+            </p>
+          </div>
+        </div>
+        <div class="content_Beceriler_Arka" id="Beceriler">
+          <div class="content_Beceriler">
+            <h2 class="content_Beceriler">
+              Beceriler
+            </h2>
+            <p class="content_Beceriler">
+              <b>CAD:</b> Autocad, Inventor, Solidworks.
+            <p class="content_Beceriler">
+              <b>CFD:</b> Ansys Fluent.
+            <p class="content_Beceriler">
+              <b>Sunum Hazırlama:</b> Word, Powerpoint, Excel, Photoshop.
+            <p class="content_Beceriler">
+              <b>Programlama:</b> Python, C++, Arduino, Fortran, HTML, CSS, Javascript.
+            </p>
+            <p class="content_Beceriler">
+              <b>Yabancı Dil:</b> İngilizce.
+            </p>
+            <p class="content_Beceriler">
+              <b>Porfesyonel:</b> Ekip çalışması, Zaman yönetimi, Analitik beceriler, Detaylara dikkat etme, Zor durumlarda sakin kalarak karşılaşılan problemlere farklı çözüm yolları arama.
+            </p>
+          </div>
+        </div>
+        <div class="content_Egitim_Arka" id="Egitim">
+          <div class="content_Egitim">
+            <h2 class="content_Egitim">
+              Eğitim
+            </h2>
+            <p class="content_Egitim">
+              <b>Lisans:</b> Kocaeli Üniversitesi Makina Mühendisliği
+            <p class="content_Egitim">
+              <b>Tarih:</b> 08/2017 - 08/2021
+            <p class="content_Egitim">
+              <b>Diploma Notu:</b> 3.23/4.00
+          <hr>
+            <p class="content_Egitim">
+              <b>Lise: </b> Çakmaklı Cumhuriyet Anadolu Lisesi - İSTANBUL
+            <p class="content_Egitim">
+              <b>Tarih:</b> 09/2013 - 06/2017
+            <p class="content_Egitim">
+              <b>Diploma Notu:</b> 86.44/100
+            </p>
+          </div>
+        </div>
+        <div class="content_Sertifikalar_Arka" id="Sertifikalar">
+          <div class="content_Sertifikalar">
+            <h2 class="content_Sertifikalar">
+              Sertifikalar
+            </h2>
+            <p class="content_Sertifikalar">
+              <b>KO-MEK 2D CAD Tasarım Kursu</b> - 17/04/2018
+            <p class="content_Sertifikalar">
+              72 saatlik AutoCAD kursu
+            </p>
+            <p class="content_Sertifikalar">
+              <b>KO-MEK 3D CAD Tasarım Kursu</b> - 05/06/2018
+            <p class="content_Sertifikalar">
+              60 saatlik Solidworks kursu
+            </p>
+          </div>
+        </div>
+        <div class="content_Projeler_Arka" id="Projeler">
+          <div class="content_Projeler">
+            <h2 class="content_Projeler">
+              Projeler
+            </h2>
+            <p class="content_Projeler">
+              <b>Bitirme Projesi:</b> Li-ion pillerin akım çekildikçe doğal taşınım altında sıcaklıklarının değişimini gösteren Python programı yazdım.
+            <p class="content_Projeler">
+              <b>Diğer Projeler: </b> Yaptığım başka hobisel projelerimi Github’a atıyorum, aynı zamanda yaptığım çizim projelerimi Grabcad’e atıyorum.
+            </p>
+          </div>
+        </div>
+        <div class="content_IsDeneyimi_Arka" id="IsDeneyimi">
+          <div class="content_IsDeneyimi">
+            <h2 class="content_IsDeneyimi">
+              İş Deneyimi
+            </h2>
+            <p class="content_IsDeneyimi">
+              <b>Yer:</b> PTT Avrupa Yakası Posta İşleme Merkezi
+            <p class="content_IsDeneyimi">
+              <b>Tarih:</b> 07/2018 - 08/2018
+            <p class="content_IsDeneyimi">
+              <b>İş Tipi:</b> Staj
+            <p class="content_IsDeneyimi">
+              <b>İş Tanımı:</b> OMAS (Otomatik Mektup Ayrıştırma Sistemi) ve havalandırma makinelerinin bakım ve geliştirme	takımında yer aldım.
+            </p>
+          </div>
+        </div>
+      </div>
+    </body>

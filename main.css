@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+body{
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: scroll;
+}
+body::-webkit-scrollbar{
+  display: none;
+}
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 80px;
+  background: orange;
+  padding: 6px 14px;
+  transition: all 0.5s ease;
+}
+.sidebar .logo_content .logo{
+  color: #fff;
+  display: flex;
+  height: 30px;
+  margin-top: 10px;
+}
+.logo_content .logo i{
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+}
+.logo_content .logo #cv-left{
+    margin-right: 8px;
+    display: none;
+}
+.logo_content .logo .logo_name{
+  display: none;
+  font-size: 18px;
+  font-weight: 400;
+  bottom: 0;
+  align-items: flex-end;
+  user-select: none;
+}
+.sidebar .close-sidebar{
+  position: absolute;
+  display: flex;
+  justify-content:flex-end;
+  height: 30px;
+  right: 29px;
+  top: 16px;
+  transition: all 0.5s ease;
+  transform: scaleX(-1);
+}
+.sidebar #lib{
+  color: #fff;
+  font-size: 22px;
+}
+.sidebar ul{
+  list-style: none;
+  margin-top: 10px;
+}
+.sidebar ul li{
+    width: 100%;
+    margin: 0 0px;
+    position: relative;
+    line-height: 50px;
+    border-radius: 20px;
+    transition: all 0.5s ease;
+}
+.sidebar ul li a{
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+}
+.sidebar ul li a i{
+  font-size: 25px;
+  min-width: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+.links_name{
+  width: 232px;
+  opacity: 0;
+  white-space: nowrap;
+  transition: all 0.5s ease;
+  transform-origin: left;
+  overflow: hidden;
+  user-select: none;
+}
+
+.sidebar ul li:hover,
+.sidebar #lib:hover{
+  cursor: pointer;
+}
+
+.sidebar .profile_content{
+  position: absolute;
+  color: #fff;
+  bottom: 0px;
+  padding-bottom: 49px;
+  background: orange;
+  max-width: 232px;
+  user-select: none;
+}
+.sidebar .profile .photo-name{
+  position: relative;
+  display: flex;
+  transition: all 0.5s ease;
+}
+.sidebar .profile .vesikalik{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  margin-right: 8px;
+  transition: all 0.5s;
+}
+.sidebar .profile .vesikalik img{
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  pointer-events: none;
+}
+.sidebar .profile .name{
+  position: absolute;
+  width: 0;
+  height: 75px;
+  margin-left: 68px;
+  bottom: 0px;
+  font-size: 18px;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  transform-origin: left;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.sidebar .profile .job{
+  font-size: 14px;
+  color: #ffe6cc;
+}
+.sidebar .profile .social{
+  position: absolute;
+  margin-left: 0;
+  margin-top: 2px;
+  width: 0;
+  border-top: 2px solid #fff;
+  transition: all 0.5s ease;
+  transform-origin: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+}
+.sidebar .profile .social .social_logo{
+  display: inline-block;
+  --widthofSocialLogo: 150px;
+  width: calc(var(--widthofSocialLogo)/5.5);
+}
+.sidebar .profile .social .social_logo a{
+  position: relative;
+  text-decoration: none;
+}
+.sidebar .profile .social .social_logo i,
+.sidebar .profile .social .social_logo img{
+  left: 0px;
+  color: #fff;
+  object-fit: cover;
+}
+.ayrac{
+  border-top: 1px solid #fff;
+  margin-top: 10px;
+}
+.social::before{
+  position: absolute;
+  display: block;
+  content: "Contact me!";
+  text-align: center;
+  background: orange;
+  transform: scaleY(1);
+  transform-origin: bottom;
+  transition: all 0.3s ease;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  inset: 0 0 0 0;
+  z-index: 2;
+}
+.social:hover::before{
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.social::after{
+  position: absolute;
+  transition: all 1s ease;
+  transform-origin: left;
+  background-color: orange;
+  font-size: 13.5px;
+  line-height: 24px;
+
+}
+.social.phoneNumber::after{
+  content:"+90 000 000 00 00";
+  color: #ffe6cc;
+  cursor: pointer;
+  width: var(--widthofNumber, 0);
+  height: 27px;
+  overflow: hidden;
+  inset: 0 0 0 0px;
+  margin-left: var(--tel_solmargin, 20px);
+}
+
+#phone:hover{
+  cursor: pointer;
+}
+
+.vesikalik.zoomin:hover{
+  cursor: zoom-in;
+}
+.vesikalik.zoomout:hover{
+  cursor: zoom-out;
+}
+
+.background{
+  background: rgba(200,200,200,1);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+}
+.content_page{
+  position: absolute;
+  z-index: -1;
+  margin-left: 80px;
+  height: 100%;
+  width: calc(100% - 80px);
+}
+
+div.content_KariyerHedefi_Arka,
+div.content_IsDeneyimi_Arka,
+div.content_Egitim_Arka,
+div.content_Beceriler_Arka,
+div.content_Sertifikalar_Arka,
+div.content_Projeler_Arka{
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+div.content_KariyerHedefi_Arka{
+  background-image: url("images/backgrounds/Meeting04.jpg");
+  /* http://gofreedownload.net/free-vector/vector-people/team-meeting-background-table-stationery-gathering-people-icons-319908/ */
+}
+div.content_IsDeneyimi_Arka{
+  background-image: url("images/backgrounds/factory.jpg");
+  /* https://wallpapermemory.com/484195 */
+  /* https://thehungryjpeg.com/product/3481627-industrial-factory-flat-ecology-vector-concept-background-environment */
+}
+div.content_Egitim_Arka{
+  background-image: url("http://clipart-library.com/images_k/math-transparent-background/math-transparent-background-14.png");
+  /* https://wallpaperaccess.com/math-formula */
+  /* http://clipart-library.com/clip-art/math-transparent-background-14.htm */
+}
+div.content_Beceriler_Arka{
+  background-image: url("images/backgrounds/building.png");
+  /* https://freedesignfile.com/174387-building-construction-background-vectors-02/ */
+}
+div.content_Sertifikalar_Arka{
+  background-image: url("images/backgrounds/ach.jpg");
+  /* https://www.vecteezy.com/vector-art/2211659-education-concept-design */
+}
+div.content_Projeler_Arka{
+  background-image: url("images/backgrounds/programming.jpg");
+  /* https://wallpapersden.com/programming-coding-language-wallpaper/ */
+}
+
+div.content_KariyerHedefi,
+div.content_IsDeneyimi,
+div.content_Egitim,
+div.content_Beceriler,
+div.content_Sertifikalar,
+div.content_Projeler{
+  position: relative;
+  max-width: 700px;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  overflow: visible;
+  padding: 20px 20px;
+  margin-right: 20px;
+  background: rgba(255,255,255,0.2);
+  align-items:center;
+  backdrop-filter: blur(10px);
+}
+
+p.content_KariyerHedefi,
+p.content_IsDeneyimi,
+p.content_Egitim,
+p.content_Beceriler,
+p.content_Sertifikalar,
+p.content_Projeler{
+  font-size: 20px;
+  text-align: left;
+  text-indent: 16px;
+}
+
+h2.content_KariyerHedefi,
+h2.content_IsDeneyimi,
+h2.content_Egitim,
+h2.content_Beceriler,
+h2.content_Sertifikalar,
+h2.content_Projeler{
+  font-size: 44px;
+  text-indent: 16px;
+  font-weight: 1200;
+}
