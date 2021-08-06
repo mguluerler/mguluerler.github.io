@@ -208,7 +208,7 @@ function scrollEventOrganizer(){
     //Scroll gerçekleşirken aktif EventListener buga giriyor sayfa aşağı yukarı titreşim yapıyordu,
     //Interval'la belirli aralıklarla scroll un bitip bitmediği denetleniyor ve bitince EventListener yeniden ekleniyor.
     scrollChecker = setInterval(() => {
-      if (window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard){
+      if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard)){
         window.addEventListener("scroll", scrollDinleyici);
         scrollAnimationOpen = false;
         clearInterval(scrollChecker);
@@ -286,7 +286,7 @@ function Dinleyiciler(){
               behavior: "smooth"});
             let scrollResizeBekle = setInterval(()=>{
               bugsayaci++;
-              if (window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard){
+              if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard)){
                 window.addEventListener("scroll", scrollDinleyici);
                 afterResizeScroll = false;
                 clearInterval(scrollResizeBekle);
