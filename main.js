@@ -190,11 +190,14 @@ function scrollDinleyici(){
   else if((document.body.getBoundingClientRect()).top < scrollPage * -1 * window.innerHeight){
     scrollPage += 1;
   }
+  clearInterval(scrollChecker);
   scrollEventOrganizer();
 }
 function sidebarScroll(page){
   window.removeEventListener("scroll", scrollDinleyici)
   scrollPage = page;
+  ilkScroll=Math.floor(document.body.getBoundingClientRect().top/window.innerHeight * -1);
+  clearInterval(scrollChecker);
   scrollEventOrganizer();
 }
 function scrollEventOrganizer(){
@@ -202,23 +205,14 @@ function scrollEventOrganizer(){
   var sayfadanCikmaToleransYuzdesi = 2/10;
   //Scroll gerçekleşirken aktif EventListener buga giriyor sayfa aşağı yukarı titreşim yapıyordu,
   //Interval'la belirli aralıklarla scroll un bitip bitmediği denetleniyor ve bitince EventListener yeniden ekleniyor.
-  const scrollChecker = setInterval(() => {
+  scrollChecker = setInterval(() => {
     if (window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top){
       window.addEventListener("scroll", scrollDinleyici)
       clearInterval(scrollChecker);
     }
-    //Sayfada fazla scroll yapıldığı zaman buga girmemesi için yapıldı, diğer türlü scrollTo komutu gerçekleşmesine rağmen
-    //Sayfa istenilen yere gelemeden scroll hakimiyetini kullanıcı ele geçiriyordu ve bundan Interval'dan çıkma komutu
-    //asla gerçekleşmiyordu.
-    else if (oncekiScroll === (document.body.getBoundingClientRect()).top){
-      window.scrollTo({
-        left: 0,
-        top: (window.innerHeight * scrollPage),
-        behavior: "smooth"});
-    }
     //Fazla scroll yapınca görselliğin bozulmaması için eklendi.
     //Aşağı fazladan kaydırma
-    else if (ilkScroll < scrollPage && document.body.getBoundingClientRect().top < -1 * scrollPage * window.innerHeight){
+    else if ((ilkScroll < scrollPage) && (document.body.getBoundingClientRect().top < -1 * scrollPage * window.innerHeight)){
       while(document.body.getBoundingClientRect().top < -1 * scrollPage * window.innerHeight){
         if ((document.body.getBoundingClientRect().top + scrollPage * window.innerHeight) * -1 > sayfadanCikmaToleransYuzdesi*window.innerHeight){
           scrollPage++;
@@ -229,7 +223,7 @@ function scrollEventOrganizer(){
       }
     }
     //Yukarı fazladan kaydırma
-    else if (ilkScroll > scrollPage && document.body.getBoundingClientRect().top > -1 * scrollPage * window.innerHeight){
+    else if ((ilkScroll > scrollPage) && (document.body.getBoundingClientRect().top > -1 * scrollPage * window.innerHeight)){
       while(document.body.getBoundingClientRect().top > -1 * scrollPage * window.innerHeight){
         if ((document.body.getBoundingClientRect().top + scrollPage * window.innerHeight) > sayfadanCikmaToleransYuzdesi*window.innerHeight){
           scrollPage--;
@@ -238,8 +232,19 @@ function scrollEventOrganizer(){
           break;
         }
       }
+
+    }
+    //Sayfada fazla scroll yapıldığı zaman buga girmemesi için yapıldı, diğer türlü scrollTo komutu gerçekleşmesine rağmen
+    //Sayfa istenilen yere gelemeden scroll hakimiyetini kullanıcı ele geçiriyordu ve bundan Interval'dan çıkma komutu
+    //asla gerçekleşmiyordu.
+    if (oncekiScroll === (document.body.getBoundingClientRect()).top){
+      window.scrollTo({
+        left: 0,
+        top: (window.innerHeight * scrollPage),
+        behavior: "smooth"});
     }
     oncekiScroll = (document.body.getBoundingClientRect()).top;
+    console.log(document.body.getBoundingClientRect().top, "top page:",window.innerHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
   }, 100)
 }
 
@@ -256,7 +261,7 @@ function Dinleyiciler(){
   social.classList.add("phoneNumber");
   social.querySelector("#phone").addEventListener("click", function(){telefonNumarasi("gorunurluk")});
   //content
-  scrollPage = 0;
+  scrollPage = Math.floor(document.body.getBoundingClientRect().top/window.innerHeight * -1);
   scroll_event = window.addEventListener("scroll", scrollDinleyici)
   kariyerHedefi = document.getElementById("KariyerHedefi");
   beceriler = document.getElementById("Beceriler");
@@ -292,3 +297,4 @@ var projeler;
 var isDeneyimi;
 var oncekiScroll;
 var ilkScroll;
+var scrollChecker = setInterval(()=>{}, 1000);
