@@ -248,7 +248,6 @@ function scrollEventOrganizer(){
       }
       oncekiScroll = (document.body.getBoundingClientRect()).top;
       console.log(document.body.getBoundingClientRect().top, "top page:",window.innerHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
-      console.log(document.documentElement.clientHeight, window.screen.height, window.innerHeight)
     }, 100)
   }
 }
