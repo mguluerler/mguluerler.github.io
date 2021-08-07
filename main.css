@@ -338,3 +338,10 @@ h2.content_Projeler{
   text-indent: 16px;
   font-weight: 1200;
 }
+
+#debug{
+  z-index: 1000;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}

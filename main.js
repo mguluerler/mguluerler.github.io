@@ -349,6 +349,10 @@ function Dinleyiciler(){
       // console.log(window.innerHeight * scrollPage * -1, (document.body.getBoundingClientRect()).top)
     }
   }, 100)
+  var debugIndex = setInterval(()=>{
+    var debugIndexChanger = document.getElementById("debug");
+    debugIndexChanger.textContent = String(window.innerHeight) +" "+ String(window.outerHeight) +" "+ String(document.body.clientHeight);
+  }, 100)
 }
 
 window.onload = function(){
