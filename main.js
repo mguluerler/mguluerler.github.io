@@ -351,7 +351,9 @@ function Dinleyiciler(){
   }, 100)
   var debugIndex = setInterval(()=>{
     var debugIndexChanger = document.getElementById("debug");
-    debugIndexChanger.textContent = String(window.innerHeight) +" "+ String(window.outerHeight) +" "+ String(document.body.clientHeight);
+    let first = String(window.innerHeight) +" "+ String(window.outerHeight) +" "+ String(document.body.clientHeight)
+    let second = String(document.body.getBoundingClientRect().top) + " " + String(document.body.getBoundingClientRect().bottom) + " "
+    debugIndexChanger.textContent = first + "\n" +  second;
   }, 100)
 }
 

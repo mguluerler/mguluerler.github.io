@@ -344,4 +344,6 @@ h2.content_Projeler{
   position: fixed;
   right: 0;
   bottom: 0;
+  white-space: pre;
+  text-align: right;
 }
