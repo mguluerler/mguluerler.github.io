@@ -184,10 +184,10 @@ function telefonNumarasi(eylem){
 function scrollDinleyici(){
   window.removeEventListener("scroll", scrollDinleyici)
   ilkScroll = scrollPage;
-  if ((document.body.getBoundingClientRect()).top > scrollPage * -1 * window.innerHeight){
+  if ((document.body.getBoundingClientRect()).top > scrollPage * -1 * document.body.clientHeight){
     scrollPage -= 1;
   }
-  else if((document.body.getBoundingClientRect()).top < scrollPage * -1 * window.innerHeight){
+  else if((document.body.getBoundingClientRect()).top < scrollPage * -1 * document.body.clientHeight){
     scrollPage += 1;
   }
   clearInterval(scrollChecker);
@@ -196,7 +196,7 @@ function scrollDinleyici(){
 function sidebarScroll(page){
   window.removeEventListener("scroll", scrollDinleyici)
   scrollPage = page;
-  ilkScroll=Math.floor(document.body.getBoundingClientRect().top/window.innerHeight * -1);
+  ilkScroll=Math.floor(document.body.getBoundingClientRect().top/document.body.clientHeight * -1);
   clearInterval(scrollChecker);
   scrollEventOrganizer();
 }
@@ -208,14 +208,14 @@ function scrollEventOrganizer(){
     //Scroll gerçekleşirken aktif EventListener buga giriyor sayfa aşağı yukarı titreşim yapıyordu,
     //Interval'la belirli aralıklarla scroll un bitip bitmediği denetleniyor ve bitince EventListener yeniden ekleniyor.
     scrollChecker = setInterval(() => {
-      if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && ((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) > -1*clientRectDisregard))){
-        if (window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top){
+      if ((document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && ((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) > -1*clientRectDisregard))){
+        if (document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top){
           window.addEventListener("scroll", scrollDinleyici);
           scrollAnimationOpen = false;
           clearInterval(scrollChecker);
           scrollTimeCounter = 0;
         }
-        else if ((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard){
+        else if ((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard){
           if (scrollTimeCounter > scrollTimeCounterLimit){
             window.addEventListener("scroll", scrollDinleyici);
             scrollAnimationOpen = false;
@@ -226,9 +226,9 @@ function scrollEventOrganizer(){
       }
       //Fazla scroll yapınca görselliğin bozulmaması için eklendi.
       //Aşağı fazladan kaydırma
-      else if ((ilkScroll < scrollPage) && (document.body.getBoundingClientRect().top < -1 * scrollPage * window.innerHeight)){
-        while(document.body.getBoundingClientRect().top < -1 * scrollPage * window.innerHeight){
-          if ((document.body.getBoundingClientRect().top + scrollPage * window.innerHeight) * -1 > sayfadanCikmaToleransYuzdesi*window.innerHeight){
+      else if ((ilkScroll < scrollPage) && (document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight)){
+        while(document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight){
+          if ((document.body.getBoundingClientRect().top + scrollPage * document.body.clientHeight) * -1 > sayfadanCikmaToleransYuzdesi*document.body.clientHeight){
             scrollPage++;
             if (scrollPage == 0){
               ilkScroll = scrollPage;
@@ -243,9 +243,9 @@ function scrollEventOrganizer(){
         }
       }
       //Yukarı fazladan kaydırma
-      else if ((ilkScroll > scrollPage) && (document.body.getBoundingClientRect().top > -1 * scrollPage * window.innerHeight)){
-        while(document.body.getBoundingClientRect().top > -1 * scrollPage * window.innerHeight){
-          if ((document.body.getBoundingClientRect().top + scrollPage * window.innerHeight) > sayfadanCikmaToleransYuzdesi*window.innerHeight){
+      else if ((ilkScroll > scrollPage) && (document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight)){
+        while(document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight){
+          if ((document.body.getBoundingClientRect().top + scrollPage * document.body.clientHeight) > sayfadanCikmaToleransYuzdesi*document.body.clientHeight){
             scrollPage--;
             if (scrollPage == maxPageNumber){
               ilkScroll = scrollPage;
@@ -261,14 +261,14 @@ function scrollEventOrganizer(){
       }
       //Yukarı çıkarken aşağı inilirse scrollEvent kapalı olduğundan bunu algılayan ifade aşağıdadır:
         //ilkScroll'u scrollPage'in 1 eksiği yapar ki aşağı fazladan kaydırma ifadesi açılsın
-      if (window.innerHeight*(scrollPage+1)*-1 > document.body.getBoundingClientRect().top){
+      if (document.body.clientHeight*(scrollPage+1)*-1 > document.body.getBoundingClientRect().top){
         ilkScroll = scrollPage - 1;
-        // console.log("assagiii", window.innerHeight*(scrollPage+1)*-1, ">", document.body.getBoundingClientRect().top)
+        // console.log("assagiii", document.body.clientHeight*(scrollPage+1)*-1, ">", document.body.getBoundingClientRect().top)
       }
       //Üsttekinin tam tersi...
-      else if (window.innerHeight*(scrollPage-1)*-1 < document.body.getBoundingClientRect().top){
+      else if (document.body.clientHeight*(scrollPage-1)*-1 < document.body.getBoundingClientRect().top){
         ilkScroll = scrollPage + 1;
-        // console.log("yukariii", window.innerHeight*(scrollPage+1)*-1, "<", document.body.getBoundingClientRect().top)
+        // console.log("yukariii", document.body.clientHeight*(scrollPage+1)*-1, "<", document.body.getBoundingClientRect().top)
 
       }
       //Sayfada fazla scroll yapıldığı zaman buga girmemesi için yapıldı, diğer türlü scrollTo komutu gerçekleşmesine rağmen
@@ -277,7 +277,7 @@ function scrollEventOrganizer(){
       if (oncekiScroll === (document.body.getBoundingClientRect()).top){
         window.scrollTo({
           left: 0,
-          top: (window.innerHeight * scrollPage),
+          top: (document.body.clientHeight * scrollPage),
           behavior: "smooth"});
         scrollTimeCounter++;
         console.log("sijmak")
@@ -286,7 +286,7 @@ function scrollEventOrganizer(){
         scrollTimeCounter = 0;
       }
       oncekiScroll = (document.body.getBoundingClientRect()).top;
-      console.log(document.body.getBoundingClientRect().top, "top page:",window.innerHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
+      console.log(document.body.getBoundingClientRect().top, "top page:",document.body.clientHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
     }, 100)
   }
 }
@@ -304,7 +304,7 @@ function Dinleyiciler(){
   social.classList.add("phoneNumber");
   social.querySelector("#phone").addEventListener("click", function(){telefonNumarasi("gorunurluk")});
   //content
-  scrollPage = Math.floor(document.body.getBoundingClientRect().top/window.innerHeight * -1);
+  scrollPage = Math.floor(document.body.getBoundingClientRect().top/document.body.clientHeight * -1);
   scroll_event = window.addEventListener("scroll", scrollDinleyici);
   kariyerHedefi = document.getElementById("KariyerHedefi");
   beceriler = document.getElementById("Beceriler");
@@ -314,18 +314,18 @@ function Dinleyiciler(){
   isDeneyimi = document.getElementById("IsDeneyimi");
   var pageWidthListener = setInterval(() => {
     if(scrollAnimationOpen == false){
-      if (window.innerHeight * scrollPage * -1 != (document.body.getBoundingClientRect()).top){
+      if (document.body.clientHeight * scrollPage * -1 != (document.body.getBoundingClientRect()).top){
         window.removeEventListener("scroll", scrollDinleyici)
-        if (eskiHeight === window.innerHeight){
+        if (eskiHeight === document.body.clientHeight){
           if (afterResizeScroll == false){
             afterResizeScroll = true;
             window.scrollTo({
               left: 0,
-              top: (window.innerHeight * scrollPage),
+              top: (document.body.clientHeight * scrollPage),
               behavior: "smooth"});
             let scrollResizeBekle = setInterval(()=>{
               bugsayaci++;
-              if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && isBugFixed == true)){
+              if ((document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && isBugFixed == true)){
                 window.addEventListener("scroll", scrollDinleyici);
                 afterResizeScroll = false;
                 clearInterval(scrollResizeBekle);
@@ -335,7 +335,7 @@ function Dinleyiciler(){
               if (bugsayaci > 20){
                 window.scrollTo({
                   left: 0,
-                  top: (window.innerHeight * scrollPage),
+                  top: (document.body.clientHeight * scrollPage),
                   behavior: "smooth"})
                   bugsayaci = 0;
                   isBugFixed = true;
@@ -344,14 +344,14 @@ function Dinleyiciler(){
           }
         }
       }
-      eskiHeight = window.innerHeight;
+      eskiHeight = document.body.clientHeight;
       // console.log(scrollAnimationOpen, afterResizeScroll, eskiHeight)
-      // console.log(window.innerHeight * scrollPage * -1, (document.body.getBoundingClientRect()).top)
+      // console.log(document.body.clientHeight * scrollPage * -1, (document.body.getBoundingClientRect()).top)
     }
   }, 100)
   var debugIndex = setInterval(()=>{
     var debugIndexChanger = document.getElementById("debug");
-    let first = String(window.innerHeight) +" "+ String(window.outerHeight) +" "+ String(document.body.clientHeight)
+    let first = String(window.outerHeight) +" "+ String(document.body.clientHeight) +" "+ String(document.body.clientHeight)
     let second = String(document.body.getBoundingClientRect().top) + " " + String(document.body.getBoundingClientRect().bottom) + " "
     debugIndexChanger.textContent = first + "\n" +  second;
   }, 100)
