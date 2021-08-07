@@ -208,10 +208,21 @@ function scrollEventOrganizer(){
     //Scroll gerçekleşirken aktif EventListener buga giriyor sayfa aşağı yukarı titreşim yapıyordu,
     //Interval'la belirli aralıklarla scroll un bitip bitmediği denetleniyor ve bitince EventListener yeniden ekleniyor.
     scrollChecker = setInterval(() => {
-      if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard)){
-        window.addEventListener("scroll", scrollDinleyici);
-        scrollAnimationOpen = false;
-        clearInterval(scrollChecker);
+      if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && ((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) > -1*clientRectDisregard))){
+        if (window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top){
+          window.addEventListener("scroll", scrollDinleyici);
+          scrollAnimationOpen = false;
+          clearInterval(scrollChecker);
+          scrollTimeCounter = 0;
+        }
+        else if ((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard){
+          if (scrollTimeCounter > scrollTimeCounterLimit){
+            window.addEventListener("scroll", scrollDinleyici);
+            scrollAnimationOpen = false;
+            clearInterval(scrollChecker);
+            scrollTimeCounter = 0;
+          }
+        }
       }
       //Fazla scroll yapınca görselliğin bozulmaması için eklendi.
       //Aşağı fazladan kaydırma
@@ -219,6 +230,12 @@ function scrollEventOrganizer(){
         while(document.body.getBoundingClientRect().top < -1 * scrollPage * window.innerHeight){
           if ((document.body.getBoundingClientRect().top + scrollPage * window.innerHeight) * -1 > sayfadanCikmaToleransYuzdesi*window.innerHeight){
             scrollPage++;
+            if (scrollPage == 0){
+              ilkScroll = scrollPage;
+            }
+            else{
+              ilkScroll = scrollPage -1;
+            }
           }
           else{
             break;
@@ -230,11 +247,28 @@ function scrollEventOrganizer(){
         while(document.body.getBoundingClientRect().top > -1 * scrollPage * window.innerHeight){
           if ((document.body.getBoundingClientRect().top + scrollPage * window.innerHeight) > sayfadanCikmaToleransYuzdesi*window.innerHeight){
             scrollPage--;
+            if (scrollPage == maxPageNumber){
+              ilkScroll = scrollPage;
+            }
+            else{
+              ilkScroll = scrollPage + 1;
+            }
           }
           else{
             break;
           }
         }
+      }
+      //Yukarı çıkarken aşağı inilirse scrollEvent kapalı olduğundan bunu algılayan ifade aşağıdadır:
+        //ilkScroll'u scrollPage'in 1 eksiği yapar ki aşağı fazladan kaydırma ifadesi açılsın
+      if (window.innerHeight*(scrollPage+1)*-1 > document.body.getBoundingClientRect().top){
+        ilkScroll = scrollPage - 1;
+        // console.log("assagiii", window.innerHeight*(scrollPage+1)*-1, ">", document.body.getBoundingClientRect().top)
+      }
+      //Üsttekinin tam tersi...
+      else if (window.innerHeight*(scrollPage-1)*-1 < document.body.getBoundingClientRect().top){
+        ilkScroll = scrollPage + 1;
+        // console.log("yukariii", window.innerHeight*(scrollPage+1)*-1, "<", document.body.getBoundingClientRect().top)
 
       }
       //Sayfada fazla scroll yapıldığı zaman buga girmemesi için yapıldı, diğer türlü scrollTo komutu gerçekleşmesine rağmen
@@ -245,6 +279,11 @@ function scrollEventOrganizer(){
           left: 0,
           top: (window.innerHeight * scrollPage),
           behavior: "smooth"});
+        scrollTimeCounter++;
+        console.log("sijmak")
+      }
+      else{
+        scrollTimeCounter = 0;
       }
       oncekiScroll = (document.body.getBoundingClientRect()).top;
       console.log(document.body.getBoundingClientRect().top, "top page:",window.innerHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
@@ -286,11 +325,12 @@ function Dinleyiciler(){
               behavior: "smooth"});
             let scrollResizeBekle = setInterval(()=>{
               bugsayaci++;
-              if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard)){
+              if ((window.innerHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((window.innerHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && isBugFixed == true)){
                 window.addEventListener("scroll", scrollDinleyici);
                 afterResizeScroll = false;
                 clearInterval(scrollResizeBekle);
                 bugsayaci = 0;
+                isBugFixed = false;
               }
               if (bugsayaci > 20){
                 window.scrollTo({
@@ -298,8 +338,8 @@ function Dinleyiciler(){
                   top: (window.innerHeight * scrollPage),
                   behavior: "smooth"})
                   bugsayaci = 0;
+                  isBugFixed = true;
               }
-              console.log("esitdegil")
             }, 100)
           }
         }
@@ -343,3 +383,8 @@ var eskiHeight;
 var afterResizeScroll = false;
 var bugsayaci = 0;
 var clientRectDisregard = 5;
+var isBugFixed = false;
+var scrollTimeCounter = 0;
+var scrollTimeCounterLimit = 10;
+var maxPageNumber = 5;
+var tersScroll = false;
