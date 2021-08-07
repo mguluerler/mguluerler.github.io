@@ -280,7 +280,6 @@ function scrollEventOrganizer(){
           top: (document.body.clientHeight * scrollPage),
           behavior: "smooth"});
         scrollTimeCounter++;
-        console.log("sijmak")
       }
       else{
         scrollTimeCounter = 0;
