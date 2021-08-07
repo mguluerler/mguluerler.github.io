@@ -235,7 +235,8 @@ function scrollEventOrganizer(){
       }
       //Fazla scroll yapınca görselliğin bozulmaması için eklendi.
       //Aşağı fazladan kaydırma
-      else if ((ilkScroll < scrollPage) && (document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight)){
+      else if (((ilkScroll < scrollPage) && (document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight))
+              && (scrollWaitLimit != 0)){
         while(document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight){
           if (((document.body.getBoundingClientRect().top + scrollPage * document.body.clientHeight) * -1 > sayfadanCikmaToleransYuzdesi*document.body.clientHeight)){
             scrollPage++;
@@ -255,7 +256,8 @@ function scrollEventOrganizer(){
         }
       }
       //Yukarı fazladan kaydırma
-      else if ((ilkScroll > scrollPage) && (document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight)){
+      else if (((ilkScroll > scrollPage) && (document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight))
+              && (scrollWaitLimit != 0)){
         while(document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight){
           if (((document.body.getBoundingClientRect().top + scrollPage * document.body.clientHeight) > sayfadanCikmaToleransYuzdesi*document.body.clientHeight)){
             scrollPage--;
@@ -289,9 +291,8 @@ function scrollEventOrganizer(){
       //Sayfa istenilen yere gelemeden scroll hakimiyetini kullanıcı ele geçiriyordu ve bundan Interval'dan çıkma komutu
       //asla gerçekleşmiyordu.
       if (oncekiScroll === (document.body.getBoundingClientRect()).top){
-        if(scrollWait == scrollWaitLimit-1){
+        if(scrollWait >= scrollWaitLimit-1){
           if (intervalDonguSayac >= 5){
-            console.log(intervalDonguSayac);
             scrollPageBulucu();
           }
           window.scrollTo({
@@ -308,8 +309,6 @@ function scrollEventOrganizer(){
       }
       oncekiScroll = (document.body.getBoundingClientRect()).top;
       intervalDonguSayac++;
-      console.log(intervalDonguSayac, scrollWait, scrollWaitLimit);
-
       // console.log(document.body.getBoundingClientRect().top, "top page:",document.body.clientHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
     }, 100)
   }
@@ -338,6 +337,51 @@ function scrollPageBulucu(){
   }
 }
 
+function resizeAutoScroll(){
+  if(scrollAnimationOpen == false){
+    if (document.body.clientHeight * scrollPage * -1 != (document.body.getBoundingClientRect()).top){
+      window.removeEventListener("scroll", scrollDinleyici)
+      if (eskiHeight === document.body.clientHeight){
+        if (afterResizeScroll == false){
+          afterResizeScroll = true;
+          window.scrollTo({
+            left: 0,
+            top: (document.body.clientHeight * scrollPage),
+            behavior: "smooth"});
+          let scrollResizeBekle = setInterval(()=>{
+            bugsayaci++;
+            if ((document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && isBugFixed == true)){
+              window.addEventListener("scroll", scrollDinleyici);
+              afterResizeScroll = false;
+              clearInterval(scrollResizeBekle);
+              bugsayaci = 0;
+              isBugFixed = false;
+            }
+            if (bugsayaci > 20){
+              window.scrollTo({
+                left: 0,
+                top: (document.body.clientHeight * scrollPage),
+                behavior: "smooth"})
+                bugsayaci = 0;
+                isBugFixed = true;
+            }
+          }, 100)
+        }
+      }
+    }
+    eskiHeight = document.body.clientHeight;
+    // console.log(scrollAnimationOpen, afterResizeScroll, eskiHeight)
+    // console.log(document.body.clientHeight * scrollPage * -1, (document.body.getBoundingClientRect()).top)
+  }
+}
+
+function rightbottomCornerDebug(){
+  var debugIndexChanger = document.getElementById("debug");
+  let first = String(window.outerHeight) +" "+ String(document.body.clientHeight) +" "+ String(document.body.clientHeight)
+  let second = String(document.body.getBoundingClientRect().top) + " " + String(document.body.getBoundingClientRect().bottom) + " "
+  debugIndexChanger.textContent = first + "\n" +  second;
+}
+
 function Dinleyiciler(){
   vesikalikZoomed = false;
   photo.addEventListener('mouseover', () => vesikalikCevirici("son"));
@@ -359,49 +403,8 @@ function Dinleyiciler(){
   sertifikalar = document.getElementById("Sertifikalar");
   projeler = document.getElementById("Projeler");
   isDeneyimi = document.getElementById("IsDeneyimi");
-  var pageWidthListener = setInterval(() => {
-    if(scrollAnimationOpen == false){
-      if (document.body.clientHeight * scrollPage * -1 != (document.body.getBoundingClientRect()).top){
-        window.removeEventListener("scroll", scrollDinleyici)
-        if (eskiHeight === document.body.clientHeight){
-          if (afterResizeScroll == false){
-            afterResizeScroll = true;
-            window.scrollTo({
-              left: 0,
-              top: (document.body.clientHeight * scrollPage),
-              behavior: "smooth"});
-            let scrollResizeBekle = setInterval(()=>{
-              bugsayaci++;
-              if ((document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top) || (((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard) && isBugFixed == true)){
-                window.addEventListener("scroll", scrollDinleyici);
-                afterResizeScroll = false;
-                clearInterval(scrollResizeBekle);
-                bugsayaci = 0;
-                isBugFixed = false;
-              }
-              if (bugsayaci > 20){
-                window.scrollTo({
-                  left: 0,
-                  top: (document.body.clientHeight * scrollPage),
-                  behavior: "smooth"})
-                  bugsayaci = 0;
-                  isBugFixed = true;
-              }
-            }, 100)
-          }
-        }
-      }
-      eskiHeight = document.body.clientHeight;
-      // console.log(scrollAnimationOpen, afterResizeScroll, eskiHeight)
-      // console.log(document.body.clientHeight * scrollPage * -1, (document.body.getBoundingClientRect()).top)
-    }
-  }, 100)
-  var debugIndex = setInterval(()=>{
-    var debugIndexChanger = document.getElementById("debug");
-    let first = String(window.outerHeight) +" "+ String(document.body.clientHeight) +" "+ String(document.body.clientHeight)
-    let second = String(document.body.getBoundingClientRect().top) + " " + String(document.body.getBoundingClientRect().bottom) + " "
-    debugIndexChanger.textContent = first + "\n" +  second;
-  }, 100)
+  var pageWidthListener = setInterval(resizeAutoScroll, 100)
+  var debugIndex = setInterval(rightbottomCornerDebug, 100)
 }
 
 window.onload = function(){
