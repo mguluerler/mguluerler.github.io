@@ -413,6 +413,10 @@ function Dinleyiciler(){
 window.onload = function(){
   elementler();
   Dinleyiciler();
+  var sideBarHeightForAndroid = setInterval(()=>{
+  sidebarDoc.style.height = String(window.innerHeight) +"px"
+  console.log(sidebarDoc.clientHeight)
+  }, 100)
 }
 
 var photo;
