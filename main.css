@@ -17,8 +17,9 @@ body::-webkit-scrollbar{
 .sidebar{
   position: fixed;
   bottom: 0;
+  top: 0;
   left: 0;
-  height: 100%;
+  height: auto;
   width: 80px;
   background: orange;
   padding: 6px 14px;
