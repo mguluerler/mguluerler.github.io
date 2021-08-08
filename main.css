@@ -11,6 +11,13 @@ body{
   width: 100%;
   overflow: scroll;
 }
+body::after, body::before{
+  position: absolute;
+  width: 100%;
+  background: gray;
+  z-index: -1000;
+  height: 125%;
+}
 body::-webkit-scrollbar{
   display: none;
 }
@@ -24,6 +31,19 @@ body::-webkit-scrollbar{
   background: orange;
   padding: 6px 14px;
   transition: all 0.5s ease;
+}
+.sidebar::after, .sidebar::before{
+  position: absolute;
+  width: 100%;
+  background: black;
+  height: 400px;
+  z-index: -1;
+}
+.sidebar::before{
+  top: -300px;
+}
+.sidebar::after{
+  top: 0;
 }
 .sidebar .logo_content .logo{
   color: #fff;
