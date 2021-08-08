@@ -311,7 +311,6 @@ function scrollEventOrganizer(type){
         scrollWait = 0;
       }
 
-      console.log(document.body.getBoundingClientRect().top)
       oncekiScroll = (document.body.getBoundingClientRect()).top;
       intervalDonguSayac++;
       // console.log(document.body.getBoundingClientRect().top, "top page:",document.body.clientHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
@@ -407,17 +406,13 @@ function Dinleyiciler(){
   sertifikalar = document.getElementById("Sertifikalar");
   projeler = document.getElementById("Projeler");
   isDeneyimi = document.getElementById("IsDeneyimi");
-  var pageWidthListener = setInterval(resizeAutoScroll, 100)
-  // var debugIndex = setInterval(rightbottomCornerDebug, 100)
+  var pageWidthListener = setInterval(resizeAutoScroll, 100);
+  // var debugIndex = setInterval(rightbottomCornerDebug, 100);
 }
 
 window.onload = function(){
   elementler();
   Dinleyiciler();
-  var sideBarHeightForAndroid = setInterval(()=>{
-    sidebarDoc.style.height = String(window.innerHeight) +"px"
-    console.log(sidebarDoc.clientHeight)
-  }, 100)
 }
 
 var photo;
