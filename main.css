@@ -10,6 +10,7 @@ body{
   min-height: 100vh;
   width: 100%;
   overflow: scroll;
+  transition: all 0.5s ease;
 }
 body::-webkit-scrollbar{
   display: none;
@@ -18,10 +19,21 @@ body::-webkit-scrollbar{
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 100%;
   width: 80px;
+  height: 100%;
   background: orange;
   padding: 6px 14px;
+  transition: all 0.5s ease;
+}
+#sidebar_bugfixer{
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  width: 80px;
+  height: 600%;
+  background-color: orange;
+  z-index: -1;
   transition: all 0.5s ease;
 }
 
@@ -240,7 +252,7 @@ body::-webkit-scrollbar{
 }
 .content_page{
   position: absolute;
-  z-index: -1;
+  z-index: -2;
   margin-left: 80px;
   height: 100%;
   width: calc(100% - 80px);
@@ -328,6 +340,14 @@ p.content_Projeler{
   p.content_Projeler{
     font-size: 14px;
   }
+  h2.content_KariyerHedefi,
+  h2.content_IsDeneyimi,
+  h2.content_Egitim,
+  h2.content_Beceriler,
+  h2.content_Sertifikalar,
+  h2.content_Projeler{
+    font-size: 18px;
+  }
 }
 
 h2.content_KariyerHedefi,
@@ -348,14 +368,4 @@ h2.content_Projeler{
   bottom: 0;
   white-space: pre;
   text-align: right;
-}
-#sidebar_bugfixer{
-  position: absolute;
-  display: block;
-  left: 0;
-  top: 0;
-  width: 260px;
-  height: 600%;
-  background-color: orange;
-  z-index: -10;
 }

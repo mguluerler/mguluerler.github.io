@@ -134,6 +134,7 @@ function sidebarAcKapa(){
     document.querySelector("#cv-left").style.display = "none";
     document.querySelector(".logo_name").style.display = "none";
     sidebarDoc.style.width = "80px";
+    sidebarBugfixer.style.width = "80px";
     for(let i = 0; i < sidebarNames.length; i++){
       sidebarButtons[i].style.width = "50px";
       sidebarNames[i].style.opacity = "0";
@@ -152,6 +153,7 @@ function sidebarAcKapa(){
     document.querySelector("#cv-left").style.display = "flex";
     document.querySelector(".logo_name").style.display = "flex";
     sidebarDoc.style.width = "260px";
+    sidebarBugfixer.style.width = "260px";
     for(let i = 0; i < sidebarNames.length; i++){
       sidebarButtons[i].style.width = "232px";
       sidebarNames[i].style.opacity = "1";
@@ -406,6 +408,7 @@ function Dinleyiciler(){
   sertifikalar = document.getElementById("Sertifikalar");
   projeler = document.getElementById("Projeler");
   isDeneyimi = document.getElementById("IsDeneyimi");
+  sidebarBugfixer = document.getElementById("sidebar_bugfixer");
   var pageWidthListener = setInterval(resizeAutoScroll, 100);
   // var debugIndex = setInterval(rightbottomCornerDebug, 100);
 }
@@ -413,10 +416,7 @@ function Dinleyiciler(){
 window.onload = function(){
   elementler();
   Dinleyiciler();
-  var sideBarHeightForAndroid = setInterval(()=>{
-  sidebarDoc.style.height = String(window.innerHeight) +"px"
-  console.log(sidebarDoc.clientHeight)
-  }, 100)
+  clientRectDisregard = 1/10 * window.innerHeight;
 }
 
 var photo;
@@ -435,6 +435,7 @@ var egitim;
 var sertifikalar;
 var projeler;
 var isDeneyimi;
+var sidebarBugfixer;
 //content
 var scrollPage;
 var oncekiScroll;
@@ -444,7 +445,7 @@ var scrollAnimationOpen = false;
 var eskiHeight;
 var afterResizeScroll = false;
 var bugsayaci = 0;
-var clientRectDisregard = 5;
+var clientRectDisregard;
 var isBugFixed = false;
 var scrollTimeCounter = 0;
 var scrollTimeCounterLimit = 10;
