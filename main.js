@@ -415,7 +415,7 @@ window.onload = function(){
   elementler();
   Dinleyiciler();
   var sideBarHeightForAndroid = setInterval(()=>{
-    sidebarDoc.clientHeight = window.innerHeight
+    sidebarDoc.style.height = String(window.innerHeight) +"px"
     console.log(sidebarDoc.clientHeight)
   }, 100)
 }
