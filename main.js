@@ -192,7 +192,7 @@ function scrollDinleyici(){
   }
   clearInterval(scrollChecker);
   scrollWaitLimit = 2;
-  scrollEventOrganizer();
+  scrollEventOrganizer(type="manual");
 }
 function sidebarScroll(page){
   window.removeEventListener("scroll", scrollDinleyici)
@@ -200,9 +200,9 @@ function sidebarScroll(page){
   ilkScroll=Math.floor(document.body.getBoundingClientRect().top/document.body.clientHeight * -1);
   clearInterval(scrollChecker);
   scrollWaitLimit = 0;
-  scrollEventOrganizer();
+  scrollEventOrganizer(type="auto");
 }
-function scrollEventOrganizer(){
+function scrollEventOrganizer(type){
   //Elle scroll yapıldığında eğer bir sayfa %80 gözüküyorsa direk o sayfaya scroll yapılır.
   var sayfadanCikmaToleransYuzdesi = 2/10;
   if (afterResizeScroll == false){
@@ -214,7 +214,7 @@ function scrollEventOrganizer(){
           || (((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) < clientRectDisregard)
           && ((document.body.clientHeight * scrollPage * -1 - (document.body.getBoundingClientRect()).top) > -1*clientRectDisregard)))
           && (scrollWait >= scrollWaitLimit-1)){
-        if (document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top){
+        if ((document.body.clientHeight * scrollPage * -1 === (document.body.getBoundingClientRect()).top)  ){
           window.addEventListener("scroll", scrollDinleyici);
           scrollAnimationOpen = false;
           clearInterval(scrollChecker);
@@ -234,9 +234,10 @@ function scrollEventOrganizer(){
         }
       }
       //Fazla scroll yapınca görselliğin bozulmaması için eklendi.
+
       //Aşağı fazladan kaydırma
       else if (((ilkScroll < scrollPage) && (document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight))
-              && (scrollWaitLimit != 0)){
+              && (scrollWaitLimit != 0) && (type == "manual")){
         while(document.body.getBoundingClientRect().top < -1 * scrollPage * document.body.clientHeight){
           if (((document.body.getBoundingClientRect().top + scrollPage * document.body.clientHeight) * -1 > sayfadanCikmaToleransYuzdesi*document.body.clientHeight)){
             scrollPage++;
@@ -257,7 +258,7 @@ function scrollEventOrganizer(){
       }
       //Yukarı fazladan kaydırma
       else if (((ilkScroll > scrollPage) && (document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight))
-              && (scrollWaitLimit != 0)){
+              && (scrollWaitLimit != 0) && (type == "manual")){
         while(document.body.getBoundingClientRect().top > -1 * scrollPage * document.body.clientHeight){
           if (((document.body.getBoundingClientRect().top + scrollPage * document.body.clientHeight) > sayfadanCikmaToleransYuzdesi*document.body.clientHeight)){
             scrollPage--;
@@ -276,23 +277,25 @@ function scrollEventOrganizer(){
           scrollWaitLimit = 4;
         }
       }
+
       //Yukarı çıkarken aşağı inilirse scrollEvent kapalı olduğundan bunu algılayan ifade aşağıdadır:
         //ilkScroll'u scrollPage'in 1 eksiği yapar ki aşağı fazladan kaydırma ifadesi açılsın
-      if (document.body.clientHeight*(scrollPage+1)*-1 > document.body.getBoundingClientRect().top){
+      if ((document.body.clientHeight*(scrollPage+1)*-1 > document.body.getBoundingClientRect().top) && (type == "manual")){
         ilkScroll = scrollPage - 1;
         // console.log("assagiii", document.body.clientHeight*(scrollPage+1)*-1, ">", document.body.getBoundingClientRect().top)
       }
       //Üsttekinin tam tersi...
-      else if (document.body.clientHeight*(scrollPage-1)*-1 < document.body.getBoundingClientRect().top){
+      else if ((document.body.clientHeight*(scrollPage-1)*-1 < document.body.getBoundingClientRect().top)  && (type == "manual")){
         ilkScroll = scrollPage + 1;
         // console.log("yukariii", document.body.clientHeight*(scrollPage+1)*-1, "<", document.body.getBoundingClientRect().top)
       }
+
       //Sayfada fazla scroll yapıldığı zaman buga girmemesi için yapıldı, diğer türlü scrollTo komutu gerçekleşmesine rağmen
       //Sayfa istenilen yere gelemeden scroll hakimiyetini kullanıcı ele geçiriyordu ve bundan Interval'dan çıkma komutu
       //asla gerçekleşmiyordu.
       if (oncekiScroll === (document.body.getBoundingClientRect()).top){
         if(scrollWait >= scrollWaitLimit-1){
-          if (intervalDonguSayac >= 5){
+          if ((intervalDonguSayac >= 5) && (type == "manual")){
             scrollPageBulucu();
           }
           window.scrollTo({
@@ -307,36 +310,15 @@ function scrollEventOrganizer(){
         scrollTimeCounter = 0;
         scrollWait = 0;
       }
+
+      console.log(document.body.getBoundingClientRect().top)
       oncekiScroll = (document.body.getBoundingClientRect()).top;
+      sideBarHeightForAndroid();
       intervalDonguSayac++;
       // console.log(document.body.getBoundingClientRect().top, "top page:",document.body.clientHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
     }, 100)
   }
 }
-
-function scrollPageBulucu(){
-  let sayfadaKalmaToleransDegeri = 6/10;
-  let sayfadaKalmaDegeri = sayfadaKalmaToleransDegeri * document.body.clientHeight
-  let topPageDifference = document.body.getBoundingClientRect().top - scrollPage * document.body.clientHeight * -1
-  let floorOfPage = Math.floor(document.body.getBoundingClientRect().top *-1 / document.body.clientHeight)
-  if (topPageDifference > 0){
-    if (topPageDifference > sayfadaKalmaDegeri){
-      scrollPage = floorOfPage;
-    }
-    else if (topPageDifference < sayfadaKalmaDegeri){
-      scrollPage = floorOfPage + 1;
-    }
-  }
-  else if (topPageDifference < 0){
-    if (topPageDifference *-1 > sayfadaKalmaDegeri){
-      scrollPage = floorOfPage + 1;
-    }
-    else if (topPageDifference *-1 < sayfadaKalmaDegeri){
-      scrollPage = floorOfPage;
-    }
-  }
-}
-
 function resizeAutoScroll(){
   if(scrollAnimationOpen == false){
     if (document.body.clientHeight * scrollPage * -1 != (document.body.getBoundingClientRect()).top){
@@ -375,6 +357,32 @@ function resizeAutoScroll(){
   }
 }
 
+function sideBarHeightForAndroid(){
+  sidebarDoc.height = window.innerHeight
+}
+function scrollPageBulucu(){
+  let sayfadaKalmaToleransDegeri = 6/10;
+  let sayfadaKalmaDegeri = sayfadaKalmaToleransDegeri * document.body.clientHeight
+  let topPageDifference = document.body.getBoundingClientRect().top - scrollPage * document.body.clientHeight * -1
+  let floorOfPage = Math.floor(document.body.getBoundingClientRect().top *-1 / document.body.clientHeight)
+  if (topPageDifference > 0){
+    if (topPageDifference > sayfadaKalmaDegeri){
+      scrollPage = floorOfPage;
+    }
+    else if (topPageDifference < sayfadaKalmaDegeri){
+      scrollPage = floorOfPage + 1;
+    }
+  }
+  else if (topPageDifference < 0){
+    if (topPageDifference *-1 > sayfadaKalmaDegeri){
+      scrollPage = floorOfPage + 1;
+    }
+    else if (topPageDifference *-1 < sayfadaKalmaDegeri){
+      scrollPage = floorOfPage;
+    }
+  }
+}
+
 function rightbottomCornerDebug(){
   var debugIndexChanger = document.getElementById("debug");
   let first = String(window.outerHeight) +" "+ String(document.body.clientHeight) +" "+ String(document.body.clientHeight)
@@ -404,7 +412,7 @@ function Dinleyiciler(){
   projeler = document.getElementById("Projeler");
   isDeneyimi = document.getElementById("IsDeneyimi");
   var pageWidthListener = setInterval(resizeAutoScroll, 100)
-  var debugIndex = setInterval(rightbottomCornerDebug, 100)
+  // var debugIndex = setInterval(rightbottomCornerDebug, 100)
 }
 
 window.onload = function(){
