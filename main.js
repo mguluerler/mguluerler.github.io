@@ -407,7 +407,7 @@ function Dinleyiciler(){
   projeler = document.getElementById("Projeler");
   isDeneyimi = document.getElementById("IsDeneyimi");
   var pageWidthListener = setInterval(resizeAutoScroll, 100)
-  // var debugIndex = setInterval(rightbottomCornerDebug, 100)
+  var debugIndex = setInterval(rightbottomCornerDebug, 100)
 }
 
 window.onload = function(){
