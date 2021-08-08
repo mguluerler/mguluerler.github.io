@@ -313,7 +313,6 @@ function scrollEventOrganizer(type){
 
       console.log(document.body.getBoundingClientRect().top)
       oncekiScroll = (document.body.getBoundingClientRect()).top;
-      sideBarHeightForAndroid();
       intervalDonguSayac++;
       // console.log(document.body.getBoundingClientRect().top, "top page:",document.body.clientHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
     }, 100)
@@ -357,9 +356,6 @@ function resizeAutoScroll(){
   }
 }
 
-function sideBarHeightForAndroid(){
-  sidebarDoc.height = window.innerHeight
-}
 function scrollPageBulucu(){
   let sayfadaKalmaToleransDegeri = 6/10;
   let sayfadaKalmaDegeri = sayfadaKalmaToleransDegeri * document.body.clientHeight
@@ -418,6 +414,10 @@ function Dinleyiciler(){
 window.onload = function(){
   elementler();
   Dinleyiciler();
+  var sideBarHeightForAndroid = setInterval(()=>{
+    sidebarDoc.clientHeight = window.innerHeight
+    console.log(sidebarDoc.clientHeight)
+  }, 100)
 }
 
 var photo;
