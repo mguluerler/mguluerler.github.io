@@ -311,7 +311,6 @@ function scrollEventOrganizer(type){
         scrollWait = 0;
       }
 
-      console.log(document.body.getBoundingClientRect().top)
       oncekiScroll = (document.body.getBoundingClientRect()).top;
       intervalDonguSayac++;
       // console.log(document.body.getBoundingClientRect().top, "top page:",document.body.clientHeight * scrollPage, "ilk page:",ilkScroll,"son page:",scrollPage, "önceki scroll:",oncekiScroll);
