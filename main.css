@@ -305,7 +305,7 @@ div.content_Beceriler,
 div.content_Sertifikalar,
 div.content_Projeler{
   position: relative;
-  max-width: 700px;
+  max-width: 1000px;
   max-height: 100%;
   text-align: center;
   left: 50%;
